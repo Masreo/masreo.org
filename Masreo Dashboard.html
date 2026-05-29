@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Dashboard</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f8fa; color: #1f2328; min-height: 100vh; }
+
+  .top-bar { background: #fff; border-bottom: 1px solid #d0d7de; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 10; }
+  .top-bar-left { display: flex; align-items: center; gap: 10px; }
+  .logo { font-size: 15px; font-weight: 600; color: #1f2328; }
+  .user-chip { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #57606a; }
+  .avatar { width: 24px; height: 24px; border-radius: 50%; background: #0969da; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
+  .refresh-btn { font-size: 13px; color: #0969da; background: none; border: 1px solid #d0d7de; border-radius: 6px; padding: 5px 12px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+  .refresh-btn:hover { background: #f3f4f6; }
+  .refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .last-updated { font-size: 12px; color: #57606a; }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .stat-card { background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 14px 16px; }
+  .stat-label { font-size: 12px; color: #57606a; margin-bottom: 6px; }
+  .stat-value { font-size: 24px; font-weight: 600; color: #1f2328; }
+  .stat-value.warn { color: #9a6700; }
+  .stat-value.danger { color: #cf222e; }
+  .stat-value.success { color: #1a7f37; }
+
+  .section { margin-bottom: 24px; }
+  .section-title { font-size: 13px; font-weight: 600; color: #57606a; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #d0d7de; }
+
+  .pr-list { display: flex; flex-direction: column; gap: 8px; }
+  .pr-item { background: #fff; border: 1px solid #d0d7de; border-radius: 8px; padding: 12px 16px; display: flex; align-items: flex-start; gap: 12px; text-decoration: none; color: inherit; transition: border-color 0.15s, box-shadow 0.15s; }
+  .pr-item:hover { border-color: #0969da; box-shadow: 0 1px 3px rgba(0,0,0,0.07); }
+  .pr-icon { flex-shrink: 0; margin-top: 2px; }
+  .pr-icon svg { display: block; }
+  .pr-body { flex: 1; min-width: 0; }
+  .pr-title-row { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .pr-title { font-size: 14px; font-weight: 500; color: #1f2328; line-height: 1.4; }
+  .pr-meta { font-size: 12px; color: #57606a; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .repo-tag { background: #ddf4ff; color: #0550ae; font-size: 11px; padding: 1px 7px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .label-tag { font-size: 11px; padding: 1px 7px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .pr-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+  .pr-num { font-size: 12px; color: #57606a; }
+
+  .issue-list { background: #fff; border: 1px solid #d0d7de; border-radius: 8px; overflow: hidden; }
+  .issue-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #d0d7de; text-decoration: none; color: inherit; transition: background 0.1s; }
+  .issue-item:last-child { border-bottom: none; }
+  .issue-item:hover { background: #f6f8fa; }
+  .issue-title { font-size: 13px; color: #1f2328; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .issue-meta { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; white-space: nowrap; }
+  .badge-open { background: #dafbe1; color: #1a7f37; }
+  .badge-closed { background: #ffebe9; color: #cf222e; }
+  .badge-draft { background: #eaeef2; color: #57606a; }
+
+  .token-screen { max-width: 480px; margin: 80px auto; background: #fff; border: 1px solid #d0d7de; border-radius: 12px; padding: 32px; text-align: center; }
+  .token-screen h1 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .token-screen p { font-size: 14px; color: #57606a; margin-bottom: 20px; line-height: 1.5; }
+  .token-input { width: 100%; border: 1px solid #d0d7de; border-radius: 6px; padding: 8px 12px; font-size: 13px; font-family: monospace; margin-bottom: 12px; outline: none; }
+  .token-input:focus { border-color: #0969da; box-shadow: 0 0 0 3px rgba(9,105,218,0.1); }
+  .token-btn { background: #0969da; color: #fff; border: none; border-radius: 6px; padding: 8px 20px; font-size: 14px; font-weight: 500; cursor: pointer; width: 100%; }
+  .token-btn:hover { background: #0860ca; }
+  .token-hint { font-size: 12px; color: #57606a; margin-top: 12px; }
+  .token-hint a { color: #0969da; }
+
+  .empty { text-align: center; padding: 32px; color: #57606a; font-size: 14px; background: #fff; border: 1px solid #d0d7de; border-radius: 8px; }
+
+  .error-banner { background: #ffebe9; border: 1px solid #ffcecb; border-radius: 8px; padding: 12px 16px; font-size: 13px; color: #cf222e; margin-bottom: 16px; display: none; }
+
+  .loading { text-align: center; padding: 48px; color: #57606a; font-size: 14px; }
+  .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid #d0d7de; border-top-color: #0969da; border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 8px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .age { color: #57606a; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-green { background: #1a7f37; }
+  .dot-red { background: #cf222e; }
+  .dot-yellow { background: #9a6700; }
+  .dot-gray { background: #d0d7de; }
+
+  .change-token { font-size: 12px; color: #57606a; cursor: pointer; background: none; border: none; text-decoration: underline; }
+  .change-token:hover { color: #1f2328; }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div id="token-screen" class="token-screen" style="display:none;">
+  <svg width="40" height="40" viewBox="0 0 16 16" fill="currentColor" style="margin-bottom:12px; color:#1f2328;" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+  <h1>GitHub Dashboard</h1>
+  <p>Paste your GitHub personal access token to get started. It stays in your browser and is never sent anywhere else.</p>
+  <input type="password" id="token-input" class="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" />
+  <button class="token-btn" onclick="saveToken()">Connect</button>
+  <p class="token-hint">Need a token? <a href="https://github.com/settings/tokens/new?scopes=repo,read:user" target="_blank">Generate one here</a> with <code>repo</code> and <code>read:user</code> scopes.</p>
+</div>
+
+<div id="app" style="display:none;">
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+      <span class="logo">GitHub Dashboard</span>
+      <div class="user-chip">
+        <div class="avatar" id="user-avatar"></div>
+        <span id="user-login"></span>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span class="last-updated" id="last-updated"></span>
+      <button class="refresh-btn" id="refresh-btn" onclick="loadAll()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/><path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/></svg>
+        Refresh
+      </button>
+      <button class="change-token" onclick="clearToken()">Change token</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="error-banner" id="error-banner"></div>
+    <div id="content">
+      <div class="loading"><div class="spinner"></div><br>Loading your GitHub data…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const TOKEN_KEY = 'gh_dashboard_token';
+
+function saveToken() {
+  const val = document.getElementById('token-input').value.trim();
+  if (!val) return;
+  localStorage.setItem(TOKEN_KEY, val);
+  init();
+}
+
+function clearToken() {
+  localStorage.removeItem(TOKEN_KEY);
+  location.reload();
+}
+
+function getToken() {
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+async function ghFetch(url) {
+  const token = getToken();
+  const res = await fetch(url, {
+    headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github+json' }
+  });
+  if (!res.ok) throw new Error(`GitHub API error ${res.status}: ${res.statusText}`);
+  return res.json();
+}
+
+function timeAgo(dateStr) {
+  const diff = (Date.now() - new Date(dateStr)) / 1000;
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+  if (diff < 86400 * 7) return `${Math.floor(diff / 86400)}d ago`;
+  return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+function repoName(repoUrl) {
+  return repoUrl.replace('https://api.github.com/repos/', '');
+}
+
+function shortRepo(repoUrl) {
+  return repoUrl.replace('https://api.github.com/repos/', '').split('/').pop();
+}
+
+function prIcon(color) {
+  const colors = { green: '#1a7f37', purple: '#8250df', gray: '#57606a', red: '#cf222e', blue: '#0969da' };
+  const c = colors[color] || colors.blue;
+  return `<svg width="18" height="18" viewBox="0 0 16 16" fill="${c}" class="pr-icon" aria-hidden="true"><path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354Z"/></svg>`;
+}
+
+function issueIcon() {
+  return `<svg width="16" height="16" viewBox="0 0 16 16" fill="#1a7f37" aria-hidden="true"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0 13 0Z" transform="scale(0.5) translate(8,8)"/><circle cx="8" cy="8" r="6.5" fill="none" stroke="#1a7f37" stroke-width="1.5"/></svg>`;
+}
+
+function labelBadge(label) {
+  const hex = label.color;
+  const r = parseInt(hex.slice(0,2),16), g = parseInt(hex.slice(2,4),16), b = parseInt(hex.slice(4,6),16);
+  const lum = 0.299*r + 0.587*g + 0.114*b;
+  const textColor = lum > 140 ? '#1f2328' : '#fff';
+  return `<span class="label-tag" style="background:#${hex}; color:${textColor}">${label.name}</span>`;
+}
+
+function renderPR(pr) {
+  const repo = shortRepo(pr.repository_url);
+  const isDraft = pr.draft;
+  const labels = (pr.labels || []).slice(0, 3).map(labelBadge).join('');
+  const iconColor = isDraft ? 'gray' : 'blue';
+  return `
+    <a href="${pr.html_url}" target="_blank" class="pr-item">
+      ${prIcon(iconColor)}
+      <div class="pr-body">
+        <div class="pr-title-row">
+          <span class="pr-title">${pr.title}</span>
+          ${isDraft ? '<span class="badge badge-draft">Draft</span>' : ''}
+          ${labels}
+        </div>
+        <div class="pr-meta">
+          <span class="repo-tag">${repo}</span>
+          <span>#${pr.number}</span>
+          <span class="age">${timeAgo(pr.updated_at)}</span>
+          ${pr.user ? `<span>by <strong>${pr.user.login}</strong></span>` : ''}
+        </div>
+      </div>
+    </a>`;
+}
+
+function renderIssue(issue) {
+  const repo = shortRepo(issue.repository_url);
+  const labels = (issue.labels || []).slice(0, 2).map(labelBadge).join('');
+  return `
+    <a href="${issue.html_url}" target="_blank" class="issue-item">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="#1a7f37" aria-hidden="true" style="flex-shrink:0;"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/><circle cx="8" cy="8" r="6.5" fill="none" stroke="#1a7f37" stroke-width="1.5"/></svg>
+      <span class="issue-title">${issue.title}</span>
+      <div class="issue-meta">
+        ${labels}
+        <span class="repo-tag">${repo}</span>
+        <span style="font-size:12px; color:#57606a;">${timeAgo(issue.updated_at)}</span>
+      </div>
+    </a>`;
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-banner');
+  el.style.display = 'block';
+  el.textContent = msg;
+}
+
+function hideError() {
+  document.getElementById('error-banner').style.display = 'none';
+}
+
+async function loadAll() {
+  hideError();
+  const btn = document.getElementById('refresh-btn');
+  btn.disabled = true;
+  document.getElementById('content').innerHTML = '<div class="loading"><div class="spinner"></div><br>Loading your GitHub data…</div>';
+
+  try {
+    const [user, myPRs, reviewPRs, myIssues] = await Promise.all([
+      ghFetch('https://api.github.com/user'),
+      ghFetch('https://api.github.com/search/issues?q=is:pr+is:open+author:@me&per_page=20&sort=updated'),
+      ghFetch('https://api.github.com/search/issues?q=is:pr+is:open+review-requested:@me&per_page=20&sort=updated'),
+      ghFetch('https://api.github.com/search/issues?q=is:issue+is:open+assignee:@me&per_page=20&sort=updated')
+    ]);
+
+    document.getElementById('user-login').textContent = user.login;
+    document.getElementById('user-avatar').textContent = user.login.slice(0,2).toUpperCase();
+    document.getElementById('last-updated').textContent = 'Updated ' + timeAgo(new Date().toISOString());
+
+    const myPRList = myPRs.items || [];
+    const reviewList = reviewPRs.items || [];
+    const issueList = myIssues.items || [];
+
+    const ciFailCount = myPRList.filter(pr => pr.state === 'open').length > 0 ? '–' : '0';
+
+    let html = `
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Your open PRs</div>
+          <div class="stat-value">${myPRList.length}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Reviews needed</div>
+          <div class="stat-value ${reviewList.length > 0 ? 'warn' : ''}">${reviewList.length}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Assigned issues</div>
+          <div class="stat-value">${issueList.length}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Repos active</div>
+          <div class="stat-value">${new Set([...myPRList, ...issueList].map(i => i.repository_url)).size}</div>
+        </div>
+      </div>`;
+
+    if (reviewList.length > 0) {
+      html += `<div class="section">
+        <div class="section-title">Waiting on your review (${reviewList.length})</div>
+        <div class="pr-list">${reviewList.map(renderPR).join('')}</div>
+      </div>`;
+    }
+
+    if (myPRList.length > 0) {
+      html += `<div class="section">
+        <div class="section-title">Your open pull requests (${myPRList.length})</div>
+        <div class="pr-list">${myPRList.map(renderPR).join('')}</div>
+      </div>`;
+    } else {
+      html += `<div class="section">
+        <div class="section-title">Your open pull requests</div>
+        <div class="empty">No open pull requests — all clear!</div>
+      </div>`;
+    }
+
+    if (issueList.length > 0) {
+      html += `<div class="section">
+        <div class="section-title">Assigned issues (${issueList.length})</div>
+        <div class="issue-list">${issueList.map(renderIssue).join('')}</div>
+      </div>`;
+    } else {
+      html += `<div class="section">
+        <div class="section-title">Assigned issues</div>
+        <div class="empty">No issues assigned to you.</div>
+      </div>`;
+    }
+
+    if (reviewList.length === 0 && myPRList.length === 0 && issueList.length === 0) {
+      html = `<div class="empty" style="margin-top:48px; padding:48px;">
+        <svg width="40" height="40" viewBox="0 0 16 16" fill="#57606a" style="margin-bottom:12px;" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"/></svg>
+        <div style="font-size:16px; font-weight:600; margin-bottom:6px;">All clear!</div>
+        <div>No open PRs, review requests, or assigned issues.</div>
+      </div>`;
+    }
+
+    document.getElementById('content').innerHTML = html;
+  } catch (err) {
+    showError('Could not load GitHub data: ' + err.message + '. Check your token has repo and read:user scopes.');
+    document.getElementById('content').innerHTML = '';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function init() {
+  const token = getToken();
+  if (!token) {
+    document.getElementById('token-screen').style.display = 'block';
+    document.getElementById('app').style.display = 'none';
+  } else {
+    document.getElementById('token-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadAll();
+  }
+}
+
+document.getElementById('token-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') saveToken();
+});
+
+localStorage.setItem(TOKEN_KEY, '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');
+init();
+</script>
+</body>
+</html>
