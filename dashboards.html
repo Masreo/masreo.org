@@ -119,6 +119,25 @@ footer{padding:28px 48px;border-top:1px solid rgba(255,255,255,0.05);display:fle
 body.editing [contenteditable=true]{outline:none;border-bottom:1px dashed rgba(201,168,76,0.35);cursor:text;padding:1px 2px;margin:-1px -2px}
 body.editing [contenteditable=true]:hover{background:rgba(201,168,76,0.04)}
 body.editing [contenteditable=true]:focus{background:rgba(201,168,76,0.08);border-bottom-color:#c9a84c;outline:none}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  nav{padding:14px 20px}
+  .nav-links a:not(.nav-cta){display:none}
+  #hero{padding:100px 20px 64px}
+  #what,#faq,#cta{padding:64px 20px}
+  #pricing{padding:64px 20px}
+  footer{padding:22px 20px;flex-direction:column;align-items:flex-start;gap:16px}
+  .hero-btns{flex-direction:column;align-items:stretch}
+  .btn-gold,.btn-ghost{text-align:center;padding:14px 20px}
+  .demo-strip{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .demo-stat{border-right:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:16px 18px}
+  .demo-stat:nth-child(even){border-right:none}
+  .demo-stat:nth-last-child(-n+2){border-bottom:none}
+  .get-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .p-card.featured{margin-top:16px}
+}
 </style>
 </head>
 <body>
