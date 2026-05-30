@@ -37,6 +37,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:fl
 .btn-ghost:hover{color:#f0f0f0;border-color:rgba(255,255,255,0.22)}
 
 /* Demo strip */
+.demo-wrap{display:inline-flex;flex-direction:column;align-items:center;gap:10px;max-width:100%}
+.demo-label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#444}
 .demo-strip{display:inline-flex;gap:0;background:#111;border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden;max-width:100%}
 .demo-stat{padding:18px 28px;border-right:1px solid rgba(255,255,255,0.06);text-align:left}
 .demo-stat:last-child{border-right:none}
@@ -47,18 +49,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:fl
 .chg-neutral{color:#555}
 
 /* ── WHAT YOU GET ── */
-#what{padding:96px 48px;background:#ffffff;border-top:none}
+#what{padding:96px 48px;background:#0d0d0d;border-top:1px solid rgba(255,255,255,0.05)}
 .section-inner{max-width:960px;margin:0 auto}
 .section-tag{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#c9a84c;margin-bottom:14px}
-#what h2{font-size:clamp(34px,5vw,52px);font-weight:300;color:#0a0a0a;margin-bottom:14px;letter-spacing:0;font-family:'Cormorant Garamond',serif}
+#what h2{font-size:clamp(34px,5vw,52px);font-weight:300;color:#fff;margin-bottom:14px;letter-spacing:0;font-family:'Cormorant Garamond',serif}
 #what .intro{font-size:16px;color:#666;max-width:560px;line-height:1.75;margin-bottom:40px}
 .get-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.get-item{background:#f5f5f5;border:1px solid #e8e8e8;border-radius:10px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:border-color 0.2s}
-.get-item:hover{border-color:rgba(201,168,76,0.4)}
-.get-icon{font-size:18px;flex-shrink:0;margin-top:1px}
-.get-title{font-size:13px;font-weight:700;color:#0a0a0a;margin-bottom:4px}
-.get-desc{font-size:12px;color:#666;line-height:1.6}
-.works-for{margin-top:28px;font-size:13px;color:#555;padding:14px 18px;background:#f0f0f0;border:1px solid #e0e0e0;border-radius:8px}
+.get-item{background:#151515;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:border-color 0.2s}
+.get-item:hover{border-color:rgba(201,168,76,0.35)}
+.get-icon{flex-shrink:0;margin-top:2px;display:flex}
+.get-title{font-size:13px;font-weight:700;color:#f0f0f0;margin-bottom:4px}
+.get-desc{font-size:12px;color:#555;line-height:1.6}
+.works-for{margin-top:28px;font-size:13px;color:#555;padding:14px 18px;background:#111;border:1px solid rgba(255,255,255,0.07);border-radius:8px}
 .works-for span{color:#c9a84c;font-weight:600}
 
 /* ── PRICING ── */
@@ -87,13 +89,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:fl
 .p-btn-gold:hover{background:#ddb94e}
 
 /* ── FAQ ── */
-#faq{padding:96px 48px;background:#ffffff;border-top:none}
-#faq h2{font-size:clamp(34px,5vw,52px);font-weight:300;color:#0a0a0a;margin-bottom:10px;letter-spacing:0;text-align:center;font-family:'Cormorant Garamond',serif}
-#faq .intro{font-size:15px;color:#666;text-align:center;margin-bottom:44px}
+#faq{padding:96px 48px;background:#0d0d0d;border-top:1px solid rgba(255,255,255,0.05)}
+#faq h2{font-size:clamp(34px,5vw,52px);font-weight:300;color:#fff;margin-bottom:10px;letter-spacing:0;text-align:center;font-family:'Cormorant Garamond',serif}
+#faq .intro{font-size:15px;color:#555;text-align:center;margin-bottom:44px}
 .faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
-.faq-item{background:#f5f5f5;border:1px solid #e8e8e8;border-radius:10px;padding:22px 24px}
-.faq-q{font-size:14px;font-weight:700;color:#0a0a0a;margin-bottom:8px}
-.faq-a{font-size:13px;color:#666;line-height:1.7}
+.faq-item{background:#151515;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:22px 24px}
+.faq-q{font-size:14px;font-weight:700;color:#f0f0f0;margin-bottom:8px}
+.faq-a{font-size:13px;color:#555;line-height:1.7}
 
 /* ── CTA ── */
 #cta{padding:96px 48px;border-top:1px solid rgba(255,255,255,0.05);background:#070707;text-align:center}
@@ -130,6 +132,7 @@ body.editing [contenteditable=true]:focus{background:rgba(201,168,76,0.08);borde
   footer{padding:22px 20px;flex-direction:column;align-items:flex-start;gap:16px}
   .hero-btns{flex-direction:column;align-items:stretch}
   .btn-gold,.btn-ghost{text-align:center;padding:14px 20px}
+  .demo-wrap{width:100%}
   .demo-strip{display:grid;grid-template-columns:1fr 1fr;width:100%}
   .demo-stat{border-right:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:16px 18px}
   .demo-stat:nth-child(even){border-right:none}
@@ -163,6 +166,7 @@ body.editing [contenteditable=true]:focus{background:rgba(201,168,76,0.08);borde
       <a href="#cta" class="btn-gold">Get Your Dashboard</a>
       <a href="#pricing" class="btn-ghost">See Pricing</a>
     </div>
+    <div class="demo-wrap">
     <div class="demo-strip">
       <div class="demo-stat">
         <div class="demo-val">£2,340</div>
@@ -185,6 +189,8 @@ body.editing [contenteditable=true]:focus{background:rgba(201,168,76,0.08);borde
         <div class="demo-chg chg-neutral">Best week this month</div>
       </div>
     </div>
+    <div class="demo-label">Example dashboard data</div>
+    </div>
   </div>
 </section>
 
@@ -196,27 +202,27 @@ body.editing [contenteditable=true]:focus{background:rgba(201,168,76,0.08);borde
     <p class="intro">Most business owners run on gut feeling because they don't have time to dig through spreadsheets. Your dashboard changes that — one page, always up to date.</p>
     <div class="get-grid">
       <div class="get-item">
-        <div class="get-icon">📊</div>
+        <div class="get-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,15 6,9 10,12 15,5 19,5"/><polyline points="14,5 19,5 19,9"/></svg></div>
         <div><div class="get-title">Revenue tracked day by day</div><div class="get-desc">See exactly how this week compares to last, with automatic percentage changes calculated for you.</div></div>
       </div>
       <div class="get-item">
-        <div class="get-icon">📅</div>
+        <div class="get-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="16" height="14" rx="2"/><line x1="2" y1="8" x2="18" y2="8"/><line x1="6" y1="2" x2="6" y2="6"/><line x1="14" y1="2" x2="14" y2="6"/></svg></div>
         <div><div class="get-title">Bookings and appointments</div><div class="get-desc">All your upcoming bookings in one view with status — confirmed, in progress or pending.</div></div>
       </div>
       <div class="get-item">
-        <div class="get-icon">🏆</div>
+        <div class="get-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="10,1.5 12.8,7.2 19,8.1 14.5,12.5 15.6,18.7 10,15.7 4.4,18.7 5.5,12.5 1,8.1 7.2,7.2"/></svg></div>
         <div><div class="get-title">Top sellers at a glance</div><div class="get-desc">Your best-performing products or services ranked automatically so you know what's driving revenue.</div></div>
       </div>
       <div class="get-item">
-        <div class="get-icon">⚡</div>
+        <div class="get-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5a5.5 5.5 0 0 0-5.5 5.5c0 3.5-1.5 4.5-1.5 4.5h14s-1.5-1-1.5-4.5A5.5 5.5 0 0 0 10 2.5z"/><line x1="8.5" y1="17.5" x2="11.5" y2="17.5"/></svg></div>
         <div><div class="get-title">Alerts for what matters</div><div class="get-desc">Low stock, missed targets, upcoming deadlines — flagged at the top of your dashboard before they become problems.</div></div>
       </div>
       <div class="get-item">
-        <div class="get-icon">🎨</div>
+        <div class="get-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="10,2 18,8 10,18 2,8"/><polyline points="2,8 10,12 18,8"/></svg></div>
         <div><div class="get-title">Fully branded to your business</div><div class="get-desc">Your colours, your name, your logo. It looks like yours, not ours.</div></div>
       </div>
       <div class="get-item">
-        <div class="get-icon">🔗</div>
+        <div class="get-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="12" height="10" rx="2"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg></div>
         <div><div class="get-title">A private link to share</div><div class="get-desc">Bookmark it, put it on a screen in-store, or share it with your manager. One link, always current.</div></div>
       </div>
     </div>
@@ -306,6 +312,22 @@ body.editing [contenteditable=true]:focus{background:rgba(201,168,76,0.08);borde
       <div class="faq-item">
         <div class="faq-q">How long does setup take?</div>
         <p class="faq-a">We typically have your first dashboard live within 3 to 5 working days of you sending us your details. From there, updates run on your chosen schedule without you needing to do anything.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do I need to be technical to use this?</div>
+        <p class="faq-a">Not at all. We send you a single link — you bookmark it, put it on a screen, or share it with your team. There's nothing to install, no logins to manage, and no software to update. If you can open a webpage, you're good.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I see an example before I commit?</div>
+        <p class="faq-a">Yes — just get in touch and we'll send you a sample dashboard so you can see exactly what you'd be getting. We'd rather you know what to expect before signing up than be surprised after.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I upgrade or downgrade my plan?</div>
+        <p class="faq-a">Yes, at any time. Just let us know and we'll adjust from your next billing date. No penalties, no awkward conversations — we want you on the plan that actually fits your business.</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if my business type isn't listed?</div>
+        <p class="faq-a">The list is just the most common — we build for all kinds of businesses. Get in touch and tell us what you track, and we'll tell you exactly how we'd set it up for you. If we can't do it well, we'll say so.</p>
       </div>
     </div>
   </div>
