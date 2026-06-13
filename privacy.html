@@ -1,1 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | Masreo</title>
+  <meta name="description" content="Privacy policy for Masreo, a Hull-based web design and SEO agency." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%230a0a0a'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-size='36' font-weight='400' fill='%23C9A84C'>M</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #ffffff; color: #111111; line-height: 1.7; }
 
+    :root {
+      --black: #0a0a0a; --white: #ffffff; --gold: #C9A84C; --gold-light: #e8c97a;
+      --grey: #f5f5f5; --text-muted: #666666; --nav-height: 72px;
+    }
+
+    h1, h2 { font-family: 'Cormorant Garamond', serif; }
+    h2 { font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 300; letter-spacing: 0.01em; margin-bottom: 1rem; color: var(--black); }
+    p { font-size: 1rem; color: var(--text-muted); font-weight: 400; line-height: 1.8; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height);
+      display: flex; align-items: center; justify-content: space-between; padding: 0 5%;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(8px);
+      border-bottom: 1px solid #ebebeb; z-index: 100;
+    }
+    .nav-logo { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--black); text-decoration: none; }
+    .nav-logo span { color: var(--gold); }
+    .nav-back { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; letter-spacing: 0.05em; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--gold); }
+
+    .policy-hero {
+      background: var(--black); padding: calc(var(--nav-height) + 5rem) 5% 5rem;
+      text-align: center;
+    }
+    .policy-hero h1 { font-size: clamp(2.4rem, 4vw, 3.5rem); font-weight: 300; color: var(--white); margin-bottom: 1rem; }
+    .policy-hero p { color: rgba(255,255,255,0.4); font-size: 0.85rem; letter-spacing: 0.1em; }
+
+    .policy-content { max-width: 760px; margin: 0 auto; padding: 5rem 5%; }
+
+    .policy-section { margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid #ebebeb; }
+    .policy-section:last-child { border-bottom: none; }
+
+    .policy-label {
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.8rem; display: block;
+    }
+
+    .policy-section p { margin-bottom: 1rem; }
+    .policy-section p:last-child { margin-bottom: 0; }
+
+    .policy-list { list-style: none; margin: 1rem 0; display: flex; flex-direction: column; gap: 0.6rem; }
+    .policy-list li { font-size: 0.95rem; color: var(--text-muted); padding-left: 1.2rem; position: relative; }
+    .policy-list li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+    .policy-highlight {
+      background: var(--grey); border-left: 3px solid var(--gold);
+      padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+    }
+    .policy-highlight p { font-size: 0.92rem; margin: 0; }
+
+    a.policy-link { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(201,168,76,0.3); transition: border-color 0.2s; }
+    a.policy-link:hover { border-color: var(--gold); }
+
+    footer {
+      background: var(--black); padding: 3rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); }
+    .footer-logo span { color: var(--gold); }
+    .footer-copy { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
+    .footer-tagline { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.75rem; color: var(--gold); letter-spacing: 0.1em; font-style: italic; }
+
+    @media (max-width: 768px) {
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Masr<span>eo</span></a>
+    <a href="index.html" class="nav-back">Back to site</a>
+  </nav>
+
+  <div class="policy-hero">
+    <h1>Privacy Policy</h1>
+    <p>Last updated: June 2026</p>
+  </div>
+
+  <div class="policy-content">
+
+    <div class="policy-section">
+      <span class="policy-label">Overview</span>
+      <h2>Our commitment to your privacy</h2>
+      <p>Masreo is committed to protecting your personal data and being transparent about how we use it. This policy explains what information we collect when you visit masreo.org, why we collect it, and your rights under UK GDPR and the Data Protection Act 2018.</p>
+      <p>We do not sell, rent or share your personal data with third parties for marketing purposes.</p>
+    </div>
+
+    <div class="policy-section">
+      <span class="policy-label">Who We Are</span>
+      <h2>Data controller</h2>
+      <p>The data controller for this website is:</p>
+      <div class="policy-highlight">
+        <p><strong style="color:var(--black);">Masreo</strong><br>
+        Hull, United Kingdom<br>
+        Email: <a href="mailto:hello@masreo.org" class="policy-link">hello@masreo.org</a></p>
+      </div>
+      <p>If you have any questions about how we handle your data, please contact us at the email above.</p>
+    </div>
+
+    <div class="policy-section">
+      <span class="policy-label">What We Collect</span>
+      <h2>Data we collect and why</h2>
+      <p>We collect two categories of data when you use this website:</p>
+
+      <p><strong style="color:var(--black);">Contact form submissions</strong><br>
+      When you fill in our contact form, we collect your name, email address, business name (optional), service interest and your message. This data is submitted via Formspree and used solely to respond to your enquiry. We do not add you to any mailing list without your explicit consent.</p>
+
+      <p><strong style="color:var(--black);">Website analytics</strong><br>
+      With your consent, we use Google Analytics 4 to collect anonymised data about how visitors use our site. This includes pages visited, time spent on the site, general location (country or region level), browser type and device type. This helps us understand what is working well and improve the site over time. No personally identifiable information is collected through analytics.</p>
+    </div>
+
+    <div class="policy-section">
+      <span class="policy-label">Cookies</span>
+      <h2>Cookies we use</h2>
+      <p>Cookies are small text files stored on your device. This site only uses cookies if you choose to accept analytics tracking. We do not use advertising cookies or any other tracking.</p>
+      <p>If you accept analytics, Google Analytics sets the following cookies:</p>
+      <ul class="policy-list">
+        <li><strong style="color:var(--black);">_ga</strong>: distinguishes unique users, expires after 2 years</li>
+        <li><strong style="color:var(--black);">_ga_0J5EE4C1XW</strong>: maintains session state, expires after 2 years</li>
+      </ul>
+      <p>If you decline analytics, no cookies are set by this site. You can change your preference at any time by clearing your browser cookies and revisiting the site.</p>
+    </div>
+
+    <div class="policy-section">
+      <span class="policy-label">Third Parties</span>
+      <h2>Third party services</h2>
+      <p>We use two third party services to operate this website:</p>
+      <p><strong style="color:var(--black);">Formspree</strong> processes contact form submissions on our behalf. Your form data is stored on Formspree's servers and forwarded to our email. View their privacy policy at <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener" class="policy-link">formspree.io</a>.</p>
+      <p><strong style="color:var(--black);">Google Analytics</strong> provides website analytics when you consent to cookies. Data is processed by Google LLC. View their privacy policy at <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="policy-link">policies.google.com</a>.</p>
+    </div>
+
+    <div class="policy-section">
+      <span class="policy-label">Data Retention</span>
+      <h2>How long we keep your data</h2>
+      <p>Contact form submissions are retained in our email inbox for as long as necessary to handle your enquiry and any subsequent business relationship. If you ask us to delete your data, we will do so within 30 days.</p>
+      <p>Google Analytics data is retained for 14 months by default, after which it is automatically deleted by Google.</p>
+    </div>
+
+    <div class="policy-section">
+      <span class="policy-label">Your Rights</span>
+      <h2>Your rights under UK GDPR</h2>
+      <p>You have the following rights regarding your personal data:</p>
+      <ul class="policy-list">
+        <li>The right to access the personal data we hold about you</li>
+        <li>The right to have inaccurate data corrected</li>
+        <li>The right to have your data deleted</li>
+        <li>The right to restrict how we process your data</li>
+        <li>The right to object to processing</li>
+        <li>The right to withdraw consent for analytics at any time</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:hello@masreo.org" class="policy-link">hello@masreo.org</a>. We will respond within 30 days.</p>
+      <p>If you are unsatisfied with how we handle your data, you have the right to lodge a complaint with the Information Commissioner's Office (ICO) at <a href="https://ico.org.uk" target="_blank" rel="noopener" class="policy-link">ico.org.uk</a> or by calling 0303 123 1113.</p>
+    </div>
+
+    <div class="policy-section">
+      <span class="policy-label">Updates</span>
+      <h2>Changes to this policy</h2>
+      <p>We may update this policy from time to time. Any changes will be posted on this page with an updated date at the top. We recommend checking back periodically.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-logo">Masr<span>eo</span></div>
+    <div class="footer-tagline">We grow together</div>
+    <div class="footer-copy">&copy; 2026 Masreo. All rights reserved.</div>
+  </footer>
+
+</body>
+</html>
+              
